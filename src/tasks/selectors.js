@@ -33,6 +33,9 @@ export const getVisibleTasks = createSelector(
       case 'completed':
         return tasks.filter(task => task.completed);
 
+      case 'price':
+        return tasks.filter(task => task.price);
+
       default:
         return tasks;
     }

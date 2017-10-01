@@ -10,7 +10,7 @@ describe('Tasks selectors', () => {
   beforeEach(() => {
     tasks = new TasksState({
       list: new List([
-        new Task({completed: false, title: 'task-1'}),
+        new Task({completed: false, title: 'task-1', price: '10', date: '2017/09/31'}),
         new Task({completed: true, title: 'task-2'})
       ])
     });

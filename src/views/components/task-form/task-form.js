@@ -12,7 +12,7 @@ export class TaskForm extends Component {
   constructor() {
     super(...arguments);
 
-    this.state = {title: ''};
+    this.state = {title: '', price: '', date: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -20,11 +20,11 @@ export class TaskForm extends Component {
   }
 
   clearInput() {
-    this.setState({title: ''});
+    this.setState({title: '', price: ''});
   }
 
   handleChange(event) {
-    this.setState({title: event.target.value});
+    this.setState({[event.target.name]: event.target.value});
   }
 
   handleKeyUp(event) {
@@ -34,8 +34,11 @@ export class TaskForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const title = this.state.title.trim();
-    if (title.length) this.props.handleSubmit(title);
-    this.clearInput();
+    const price = this.state.price.trim();
+    if (title.length && price.length) {
+      this.props.handleSubmit(title, price);
+      this.clearInput();
+    }
   }
 
   render() {
@@ -48,11 +51,26 @@ export class TaskForm extends Component {
           maxLength="64"
           onChange={this.handleChange}
           onKeyUp={this.handleKeyUp}
-          placeholder="What needs to be done?"
+          placeholder="Name the expense"
           ref={e => this.titleInput = e}
+          name="title"
           type="text"
           value={this.state.title}
         />
+        <input
+          autoComplete="off"
+          autoFocus
+          className="task-form__input"
+          maxLength="64"
+          onChange={this.handleChange}
+          onKeyUp={this.handleKeyUp}
+          placeholder="Price"
+          ref={e => this.priceInput = e}
+          type="text"
+          name="price"
+          value={this.state.price}
+        />
+        <input type="submit" style={{visible: 'none', position: 'absolute', zIndex: '-9999'}}/>
       </form>
     );
   }
